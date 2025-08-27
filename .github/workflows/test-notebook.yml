@@ -1,0 +1,32 @@
+name: Test Jupyter Notebook
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nbval jupyter pytest
+          pip install -r requirements.txt
+
+      # Run notebook tests
+      - name: Run demo.ipynb with pytest-nbval
+        run: |
+          pytest --nbval-lax demo.ipynb
