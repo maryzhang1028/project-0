@@ -26,6 +26,10 @@ jobs:
           pip install nbval jupyter pytest
           pip install -r requirements.txt
 
+      - name: Clean Jupyter notebook
+        run: |
+          jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace demo.ipynb
+
       # Run notebook tests
       - name: Run demo.ipynb with pytest-nbval
         run: |
